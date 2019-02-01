@@ -1,0 +1,61 @@
+body {
+  background-color: #fcfcfc;
+  font-family: 'Helvetica';
+  color: #262626;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #cccccc;
+  font-size: 14px;
+  text-align: center;
+}
+
+#td_number {
+  width: 20px;
+}
+
+#td_rider_name {
+  width: 150px;
+  text-align: left;
+  padding-left: 5px;
+}
+
+#td_point {
+  width: 20px;
+}
+
+#td_sum {
+  width: 40px;
+}
+
+tr:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+.main-box {
+  width: 1200px;
+  border: 1px solid;
+  border-color: #bebebe;
+  background-color: #f8f8f8;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0px 0px 5px 0px;
+}
+
+#teams-wrapper {
+  width: 80%;
+  margin: auto;
+}
+
+#home {
+  display: inline-block;
+}
+
+#away {
+  float: right;
+  display: inline-block;
+}
