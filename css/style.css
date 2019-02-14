@@ -24,23 +24,40 @@ td {
   font-size: 14px;
   text-align: center;
   height: 20px;
+  font-size: 12px;
 }
 
-#td_number {
+select {
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+  height: 17px;
+  font-size: 12px;
+}
+
+#td-number {
   width: 20px;
 }
 
-#td_rider_name {
+#td-rider-name {
   width: 170px;
   text-align: left;
   padding-left: 5px;
 }
 
-#td_point {
+#td-swapped-rider-name {
+  width: 170px;
+  text-align: left;
+  padding-left: 5px;
+  text-decoration: line-through;
+  color: #4d4d4d;
+}
+
+#td-point {
   width: 20px;
 }
 
-#td_sum {
+#td-sum {
   width: 40px;
 }
 
@@ -48,23 +65,23 @@ tr:nth-child(even) {
   background-color: #e6e6e6;
 }
 
-#td_red {
-  background-color: #ff6464;
+.td-red {
+  background-color: #ff6f6f;
 }
 
-#td_blue {
+.td-blue {
   background-color: #76d9fe;
 }
 
-#td_white {
+.td-white {
   background-color: #f8f8f8;
 }
 
-#td_yellow {
+.td-yellow {
   background-color: #ffff79;
 }
 
-#td_race_number {
+#td-race-number {
   background-color: #f8f8f8;
   width: 40px;
   font-size: 30px;
@@ -103,10 +120,18 @@ tr:nth-child(even) {
   display: inline-block;
 }
 
-#winner_time_textfield {
+#winner-time-textfield {
   border: 0px;
   background-color: #e6e6e6;
   text-align: center;
   width: 38px;
+  height: 17px;
+}
+
+#position-textfield {
+  border: 0px;
+  background-color: transparent;
+  text-align: center;
+  width: 18px;
   height: 17px;
 }

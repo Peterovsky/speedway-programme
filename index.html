@@ -14,42 +14,43 @@
       <div id="away"></div>
     </div>
     <div class="races-wrapper" id="races-wrapper-left">
-      <div class="race" id="race_1"></div>
-      <div class="race" id="race_2"></div>
-      <div class="race" id="race_3"></div>
-      <div class="race" id="race_4"></div>
-      <div class="race" id="race_5"></div>
-      <div class="race" id="race_6"></div>
-      <div class="race" id="race_7"></div>
-      <div class="race" id="race_8"></div>
+      <div class="race" id="race-1"></div>
+      <div class="race" id="race-2"></div>
+      <div class="race" id="race-3"></div>
+      <div class="race" id="race-4"></div>
+      <div class="race" id="race-5"></div>
+      <div class="race" id="race-6"></div>
+      <div class="race" id="race-7"></div>
+      <div class="race" id="race-8"></div>
     </div>
     <div class="races-wrapper" id="races-wrapper-right">
-      <div class="race" id="race_9"></div>
-      <div class="race" id="race_10"></div>
-      <div class="race" id="race_11"></div>
-      <div class="race" id="race_12"></div>
-      <div class="race" id="race_13"></div>
-      <div class="race" id="race_14"></div>
-      <div class="race" id="race_15"></div>
+      <div class="race" id="race-9"></div>
+      <div class="race" id="race-10"></div>
+      <div class="race" id="race-11"></div>
+      <div class="race" id="race-12"></div>
+      <div class="race" id="race-13"></div>
+      <div class="race" id="race-14"></div>
+      <div class="race" id="race-15"></div>
     </div>
     <script>
       createTeamTable("home");
       createTeamTable("away");
-      createRaceTable(1, [1,9,2,10], ["yellow", "red", "white", "blue"]);
-      createRaceTable(2, [15,6,14,7], ["blue", "yellow", "red", "white"]);
-      createRaceTable(3, [11,3,12,4], ["red", "yellow", "blue", "white"]);
-      createRaceTable(4, [5,15,7,13], ["yellow", "blue", "white", "red"]);
-      createRaceTable(5, [12,1,11,2], ["blue", "yellow", "red", "white"]);
-      createRaceTable(6, [3,13,4,14], ["yellow", "red", "white", "blue"]);
-      createRaceTable(7, [9,5,10,6], ["red", "yellow", "blue", "white"]);
-      createRaceTable(8, [13,2,15,1], ["red", "white", "blue", "yellow"]);
-      createRaceTable(9, [4,10,3,9], ["white", "blue", "yellow", "red"]);
-      createRaceTable(10, [7,11,5,12], ["white", "red", "yellow", "blue"]);
-      createRaceTable(11, [10,2,13,3], ["blue", "white", "red", "yellow"]);
-      createRaceTable(12, [6,14,1,11], ["white", "blue", "yellow", "red"]);
-      createRaceTable(13, [12,4,9,5], ["blue", "white", "red", "yellow"]);
-      createRaceTable(14, ["","","",""], ["red", "white", "blue", "yellow"]);
-      createRaceTable(15, ["","","",""], ["red", "white", "blue", "yellow"]);
+      createRace(1, [1,9,2,10], ["yellow", "red", "white", "blue"]);
+      createRace(2, [15,6,14,7], ["blue", "yellow", "red", "white"]);
+      createRace(3, [11,3,12,4], ["red", "yellow", "blue", "white"]);
+      createRace(4, [5,15,7,13], ["yellow", "blue", "white", "red"]);
+      createRace(5, [12,1,11,2], ["blue", "yellow", "red", "white"]);
+      createRace(6, [3,13,4,14], ["yellow", "red", "white", "blue"]);
+      createRace(7, [9,5,10,6], ["red", "yellow", "blue", "white"]);
+      createRace(8, [13,2,15,1], ["red", "white", "blue", "yellow"]);
+      createRace(9, [4,10,3,9], ["white", "blue", "yellow", "red"]);
+      createRace(10, [7,11,5,12], ["white", "red", "yellow", "blue"]);
+      createRace(11, [10,2,13,3], ["blue", "white", "red", "yellow"]);
+      createRace(12, [6,14,1,11], ["white", "blue", "yellow", "red"]);
+      createRace(13, [12,4,9,5], ["blue", "white", "red", "yellow"]);
+      createRace(14, [0,0,0,0], ["red", "white", "blue", "yellow"]);
+      createRace(15, [0,0,0,0], ["red", "white", "blue", "yellow"]);
+      createAllRaceTables();
     </script>
   </div>
 
