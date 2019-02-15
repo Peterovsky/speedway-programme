@@ -3,15 +3,17 @@ var races = [];
 var homeTeamPoints = []; // 15 elements array with amount of points earned by team in each race
 var awayTeamPoints = [];
 
-for (i = 0; i < 16; i++) {  // Fills race informations database with default values
+for (i = 0; i < 16; i++) {  // Fills race informations table and table with team results with default values
   // numbers - 4-element array with numbers of riders in races
   // helmets - 4-element array with helmet colors of riders in races
   // swaps - 4-element array with information about rider swaps on each gate
-  // resultss - 4-element array with information about rider results on each gate
-  races[i] = { raceNumber: i, numbers: [], helmets: [], swaps: [0,0,0,0], results: [0,0,0,0] };
+  // results - 4-element array with information about rider results on each gate
+  races[i] = { raceNumber: i, numbers: [], helmets: [], swaps: [0,0,0,0], positions: ["","","",""], results: ["","","",""] };
+  homeTeamPoints[i] = 0;
+  awayTeamPoints[i] = 0;
 }
 
-for (i = 0; i < 17; i++) {  // Fills riders database with default values
+for (i = 0; i < 17; i++) {  // Fills riders table with default values
   riders[i] = { number: i, name: "", results: [] };
 }
 
@@ -107,7 +109,6 @@ function createRaceTable(race) {
 
     // Riders names
     var td_rider_name = eval("tr" + i).insertCell();
-    console.log(riders[race.numbers[i]].name)
     var temp = riders[race.numbers[i]].name;
     if (temp == null) temp = "";
     td_rider_name.appendChild(document.createTextNode(temp));
@@ -156,7 +157,8 @@ function createRaceTable(race) {
     var input = document.createElement("input");
     input.type = "text";
     input.id = "position-textfield";
-    input.setAttribute("raceProperties", [race.raceNumber, i, j]);
+    input.name = [race.raceNumber, i];
+    input.value = race.positions[i];
     input.setAttribute("onchange", "setResult(this)");
     td_rider_position.appendChild(text_field.appendChild(input));
     td_rider_position.className = "td-" + race.helmets[i];
@@ -164,46 +166,70 @@ function createRaceTable(race) {
 
     // Rider result
     var td_rider_result = eval("tr" + i).insertCell();
-    // TO-DO: Logic that will match earned points to the position
     td_rider_result.className = "td-" + race.helmets[i];
     td_rider_result.width = "20px";
-    td_rider_result.appendChild(document.createTextNode(""));
+    td_rider_result.appendChild(document.createTextNode(race.results[i]));
   }
 
   // Race and match results
   var td_race_result_home = tr0.insertCell();
-  //td_race_result_home.appendChild();
   td_race_result_home.setAttribute("rowspan", 2);
   td_race_result_home.width = "40px";
 
   var td_race_result_away = tr0.insertCell();
-  // td_race_result_away.appendChild();
   td_race_result_away.setAttribute("rowspan", 2);
   td_race_result_away.width = "40px";
 
   var td_match_result_home = tr2.insertCell();
-  //  td_match_result_home.appendChild();
   td_match_result_home.setAttribute("rowspan", 2);
   td_match_result_home.setAttribute("bgcolor", "#e6e6e6");
   td_match_result_home.width = "40px";
 
   var td_match_result_away = tr2.insertCell();
-  // td_match_result_away.appendChild();
   td_match_result_away.setAttribute("rowspan", 2);
   td_match_result_away.setAttribute("bgcolor", "#e6e6e6");
   td_match_result_away.width = "40px";
+
+  // Appears match results in race table if all riders results are set
+  if (races[race.raceNumber].results.includes("") == false) {
+    td_race_result_home.appendChild(document.createTextNode(homeTeamPoints[race.raceNumber]));
+    td_race_result_away.appendChild(document.createTextNode(awayTeamPoints[race.raceNumber]));
+    td_match_result_home.appendChild(document.createTextNode(homeTeamPoints.slice(0,race.raceNumber+1).reduce((a, b) => a + b, 0)));
+    td_match_result_away.appendChild(document.createTextNode(awayTeamPoints.slice(0,race.raceNumber+1).reduce((a, b) => a + b, 0)));
+  }
 
   raceElement.appendChild(table);
 }
 
 function swap(object) {
-  var swap_details = object.value.split(",")  // [0] - race number, [1] - gate on which swap was made, [2] - rider chosen to swap
-  races[swap_details[0]].swaps[swap_details[1]] = swap_details[2];
-  createRaceTable(races[swap_details[0]]);  // refreshes race table after swap
+  var swapDetails = object.value.split(",")  // [0] - race number, [1] - gate on which swap was made, [2] - rider chosen to swap
+  races[swapDetails[0]].swaps[swapDetails[1]] = swapDetails[2];
+  createRaceTable(races[swapDetails[0]]);  // Refreshes race table after swap
 }
 
 function setResult(object) {
-  // TO-DO: Setting rider results actions
+  var resultsDetails = object.name.split(",");
+  var raceNumber = resultsDetails[0];
+  var gate = resultsDetails[1];
+  // Matching points with position
+  var pointsEarned = object.value;
+  if (object.value == 1) pointsEarned = 3;
+  if (object.value == 2) pointsEarned = 2;
+  if (object.value == 3) pointsEarned = 1;
+  if (object.value == 4) pointsEarned = 0;
+  // Adding position and result to race object
+  races[raceNumber].positions[gate] = object.value;
+  races[raceNumber].results[gate] = pointsEarned;
+  // Adding results to team results table
+  if (races[raceNumber].helmets[gate] == "red" || races[raceNumber].helmets[gate] == "blue") {
+    if (typeof pointsEarned == "number") homeTeamPoints[raceNumber] += pointsEarned;
+  } else {
+    if (typeof pointsEarned == "number") awayTeamPoints[raceNumber] += pointsEarned;
+  }
+  // Refreshing race table after all results are set
+  if (races[raceNumber].results.includes("") == false) {
+    createRaceTable(races[raceNumber]);
+  }
 }
 
 function createAllRaceTables() {
