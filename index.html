@@ -14,6 +14,7 @@
       <div id="away"></div>
     </div>
     <div class="races-wrapper" id="races-wrapper-left">
+      <div class="race" id="header"></div>
       <div class="race" id="race-1"></div>
       <div class="race" id="race-2"></div>
       <div class="race" id="race-3"></div>
@@ -24,6 +25,7 @@
       <div class="race" id="race-8"></div>
     </div>
     <div class="races-wrapper" id="races-wrapper-right">
+      <div class="race" id="header2"></div>
       <div class="race" id="race-9"></div>
       <div class="race" id="race-10"></div>
       <div class="race" id="race-11"></div>
@@ -35,6 +37,8 @@
     <script>
       createTeamTable("home");
       createTeamTable("away");
+      createRaceTableHeader("header");
+      createRaceTableHeader("header2");
       createRace(1, [1,9,2,10], ["yellow", "red", "white", "blue"]);
       createRace(2, [15,6,14,7], ["blue", "yellow", "red", "white"]);
       createRace(3, [11,3,12,4], ["red", "yellow", "blue", "white"]);
