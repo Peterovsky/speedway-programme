@@ -2,6 +2,8 @@ var riders = [];  // Array with all 16 rider objects
 var races = [];   // Array with all 15 race objects
 var homeTeamPoints = []; // 15 elements array with amount of points earned by home team in each race
 var awayTeamPoints = []; // 15 elements array with amount of points earned by away team in each race
+var homeTeamName;
+var awayTeamName;
 
 for (i = 0; i < 16; i++) {  // Fills race informations table and table with team results with default values
   // numbers - 4-element array with numbers of riders in races
@@ -19,6 +21,15 @@ for (i = 0; i < 17; i++) {  // Fills riders table with default values
 
 function setRider(number, name) {
   riders[number].name = name;
+  createAllRaceTables();  // Refreshes all race tables after rider name set
+}
+
+function setTeamName(team, name) {
+  if (team == "home") {
+    homeTeamName = name;
+  } else {
+    awayTeamName = name;
+  }
 }
 
 // Function that creates race object with specified number and helmet of rider on each start gate
@@ -42,6 +53,7 @@ function isNumber(value) {
 // Function that creates table with team results
 function createTeamTable(team) {
 
+
   var element = document.getElementById(team);
   var table = document.createElement("table");
   element.innerHTML = "";  // Removes div content so if we refresh team tables we don't get duplicates
@@ -49,6 +61,33 @@ function createTeamTable(team) {
   var teamOffset = 0;
   if (team == "home") {
     teamOffset = 8;
+  }
+
+  // Team name
+  var tr = table.insertRow();
+  var tdTeamName = tr.insertCell();
+  tdTeamName.setAttribute("colspan", 9);
+  var textField = document.createElement("form");
+  var input = document.createElement("input");
+  input.type = "text";
+  input.id = "standard-textfield";
+  input.placeholder = "Enter team name";
+  if (team == "home") {
+    input.name = "home";
+    if (homeTeamName != null) input.value = homeTeamName;
+  } else {
+    input.name = "away";
+    if (awayTeamName != null)  input.value = awayTeamName;
+  }
+  input.setAttribute("onchange", "setTeamName(this.name, this.value)");
+  tdTeamName.appendChild(textField.appendChild(input));;
+
+  // Team result
+  var tdTeamResult = tr.insertCell();
+  if (team == "home") {
+    tdTeamResult.appendChild(document.createTextNode(homeTeamPoints.reduce((a, b) => a + b, 0)));
+  } else {
+    tdTeamResult.appendChild(document.createTextNode(awayTeamPoints.reduce((a, b) => a + b, 0)));
   }
 
   // Column headers
@@ -68,10 +107,15 @@ function createTeamTable(team) {
     tdNumber.appendChild(document.createTextNode(i));
     tdNumber.id = "td-number";
     // Rider name
-    var temp = riders[i].name;
-    if (temp == null) temp = "";
     var tdRiderName = tr.insertCell();
-    tdRiderName.appendChild(document.createTextNode(temp));
+    var textField = document.createElement("form");
+    var input = document.createElement("input");
+    input.type = "text";
+    input.id = "rider-name-textfield";
+    input.name = i;
+    input.value = riders[i].name;
+    input.setAttribute("onchange", "setRider(this.name, this.value)");
+    tdRiderName.appendChild(textField.appendChild(input));;
     tdRiderName.id = "td-rider-name";
     // Results of rider races
     for (j = 0; j < 7; j++) {
@@ -221,7 +265,7 @@ function createRaceTable(race) {
     var textField = document.createElement("form");
     var input = document.createElement("input");
     input.type = "text";
-    input.id = "position-textfield";
+    input.id = "standard-textfield";
     input.name = [race.raceNumber, i];
     input.value = race.positions[i];
     input.setAttribute("onchange", "calculateResults(this)");
