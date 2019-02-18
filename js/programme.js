@@ -10,7 +10,8 @@ for (i = 0; i < 16; i++) {  // Fills race informations table and table with team
   // helmets - 4-element array with helmet colors of riders in races
   // swaps - 4-element array with information about rider swaps on each gate
   // results - 4-element array with information about rider results on each gate
-  races[i] = { raceNumber: i, numbers: [], helmets: [], swaps: [0,0,0,0], positions: ["","","",""], results: ["","","",""] };
+  // isAdditional - additional races are races which don't have predifined riders set, riders are chosen by coach during the match
+  races[i] = { raceNumber: i, numbers: [], helmets: [], swaps: [0,0,0,0], positions: ["","","",""], results: ["","","",""], isAdditional: false };
   homeTeamPoints[i] = 0;
   awayTeamPoints[i] = 0;
 }
@@ -21,7 +22,6 @@ for (i = 0; i < 17; i++) {  // Fills riders table with default values
 
 function setRider(number, name) {
   riders[number].name = name;
-  createAllRaceTables();  // Refreshes all race tables after rider name set
 }
 
 function setTeamName(team, name) {
@@ -33,9 +33,10 @@ function setTeamName(team, name) {
 }
 
 // Function that creates race object with specified number and helmet of rider on each start gate
-function createRace(raceNumber, numbers, helmets) {
+function createRace(raceNumber, numbers, helmets, isAdditional) {
   races[raceNumber].numbers = numbers;
   races[raceNumber].helmets = helmets;
+  races[raceNumber].isAdditional = isAdditional;
 }
 
 function isNotNull(value) {
@@ -52,7 +53,6 @@ function isNumber(value) {
 
 // Function that creates table with team results
 function createTeamTable(team) {
-
 
   var element = document.getElementById(team);
   var table = document.createElement("table");
@@ -114,7 +114,7 @@ function createTeamTable(team) {
     input.id = "rider-name-textfield";
     input.name = i;
     input.value = riders[i].name;
-    input.setAttribute("onchange", "setRider(this.name, this.value)");
+    input.setAttribute("onchange", "setRider(this.name, this.value); createAllRaceTables()");
     tdRiderName.appendChild(textField.appendChild(input));;
     tdRiderName.id = "td-rider-name";
     // Results of rider races
@@ -216,14 +216,50 @@ function createRaceTable(race) {
     tdRiderNumber.width = "20px";
 
     // Riders names
-    var tdRiderName = eval("tr" + i).insertCell();
-    var temp = riders[race.numbers[i]].name;
-    if (temp == null) temp = "";
-    tdRiderName.appendChild(document.createTextNode(temp));
-    tdRiderName.className = "td-" + race.helmets[i];
-    tdRiderName.id = "td-rider-name";
-    if (races[race.raceNumber].swaps[i] != "") {
-      tdRiderName.id = "td-swapped-rider-name";
+    if (race.isAdditional == false) { // Numbers are set to 0 in race in which we choose riders
+      var tdRiderName = eval("tr" + i).insertCell();
+      var temp = riders[race.numbers[i]].name;
+      if (temp == null) temp = "";
+      tdRiderName.appendChild(document.createTextNode(temp));
+      tdRiderName.className = "td-" + race.helmets[i];
+      tdRiderName.id = "td-rider-name";
+      if (races[race.raceNumber].swaps[i] != "") {
+        tdRiderName.id = "td-swapped-rider-name";
+      }
+    } else {
+      var tdRiderName = eval("tr" + i).insertCell();
+      var select = document.createElement("select");
+      var teamOffset = 0;
+      if (race.helmets[i] == "red" || race.helmets[i] == "blue") {
+        teamOffset = 8;
+      }
+      // Default empty option
+      var option = document.createElement("option");
+      option.className = "td-" + race.helmets[i];
+      option.value = [race.raceNumber, i, ""];
+      option.appendChild(document.createTextNode(""));
+      select.appendChild(option);
+      // Riders options
+      for (j = (1 + teamOffset); j < (9 + teamOffset); j++) {
+          var option = document.createElement("option");
+          if (j == races[race.raceNumber].numbers[i]) {
+            option.selected = "selected";
+          }
+          var temp = riders[j].name;
+          if (temp != "") {   // Adds option only if rider with "j" number is created
+            option.value = [race.raceNumber, i, j];
+            option.className = "td-" + race.helmets[i];
+            option.appendChild(document.createTextNode(temp));
+            select.appendChild(option);
+          }
+      }
+      if (races[race.raceNumber].swaps[i] != "") {
+        select.id = "select-swapped";
+      }
+      select.setAttribute("onchange", "setRiderInRace(this)");
+      tdRiderName.appendChild(select);
+      tdRiderName.className = "td-" + race.helmets[i];
+      tdRiderName.width = "170px";
     }
 
     // Slots for rider change
@@ -312,10 +348,18 @@ function createRaceTable(race) {
 
 // Function that realizes rider swap
 function swap(object) {
-  var swapDetails = object.value.split(",")  // [0] - race number, [1] - gate on which swap was made, [2] - rider chosen to swap
+  var swapDetails = object.value.split(",")  // [0] - race number, [1] - gate on which swap was made, [2] - number of rider chosen to swap
   races[swapDetails[0]].swaps[swapDetails[1]] = swapDetails[2];
   createRaceTable(races[swapDetails[0]]);  // Refreshes race table after swap
   updateTeamTable(races[swapDetails[0]]);
+}
+
+// Function that set rider in additional race.
+function setRiderInRace(object) {
+  var setDetails = object.value.split(",")  // [0] - race number, [1] - gate on which set was made, [2] - number of rider chosen to set
+  races[setDetails[0]].numbers[setDetails[1]] = setDetails[2];
+  createRaceTable(races[setDetails[0]]);  // Refreshes race table after swap
+  updateTeamTable(races[setDetails[0]]);
 }
 
 // Function that calculates results based on positions entered by user

@@ -4,10 +4,8 @@
   <title>Speedway Programme</title>
   <link rel="Stylesheet" type="text/css" href="css/style.css">
   <script src="js/programme.js"></script>
-
 </head>
 <body>
-
   <div class="main-box">
     <div id="teams-wrapper">
       <div id="home"></div>
@@ -39,21 +37,21 @@
       createTeamTable("away");
       createRaceTableHeader("header");
       createRaceTableHeader("header2");
-      createRace(1, [1,9,2,10], ["yellow", "red", "white", "blue"]);
-      createRace(2, [15,6,14,7], ["blue", "yellow", "red", "white"]);
-      createRace(3, [11,3,12,4], ["red", "yellow", "blue", "white"]);
-      createRace(4, [5,15,7,13], ["yellow", "blue", "white", "red"]);
-      createRace(5, [12,1,11,2], ["blue", "yellow", "red", "white"]);
-      createRace(6, [3,13,4,14], ["yellow", "red", "white", "blue"]);
-      createRace(7, [9,5,10,6], ["red", "yellow", "blue", "white"]);
-      createRace(8, [13,2,15,1], ["red", "white", "blue", "yellow"]);
-      createRace(9, [4,10,3,9], ["white", "blue", "yellow", "red"]);
-      createRace(10, [7,11,5,12], ["white", "red", "yellow", "blue"]);
-      createRace(11, [10,2,13,3], ["blue", "white", "red", "yellow"]);
-      createRace(12, [6,14,1,11], ["white", "blue", "yellow", "red"]);
-      createRace(13, [12,4,9,5], ["blue", "white", "red", "yellow"]);
-      createRace(14, [0,0,0,0], ["red", "white", "blue", "yellow"]);
-      createRace(15, [0,0,0,0], ["red", "white", "blue", "yellow"]);
+      createRace(1, [1,9,2,10], ["yellow", "red", "white", "blue"], false);
+      createRace(2, [15,6,14,7], ["blue", "yellow", "red", "white"], false);
+      createRace(3, [11,3,12,4], ["red", "yellow", "blue", "white"], false);
+      createRace(4, [5,15,7,13], ["yellow", "blue", "white", "red"], false);
+      createRace(5, [12,1,11,2], ["blue", "yellow", "red", "white"], false);
+      createRace(6, [3,13,4,14], ["yellow", "red", "white", "blue"], false);
+      createRace(7, [9,5,10,6], ["red", "yellow", "blue", "white"], false);
+      createRace(8, [13,2,15,1], ["red", "white", "blue", "yellow"], false);
+      createRace(9, [4,10,3,9], ["white", "blue", "yellow", "red"], false);
+      createRace(10, [7,11,5,12], ["white", "red", "yellow", "blue"], false);
+      createRace(11, [10,2,13,3], ["blue", "white", "red", "yellow"], false);
+      createRace(12, [6,14,1,11], ["white", "blue", "yellow", "red"], false);
+      createRace(13, [12,4,9,5], ["blue", "white", "red", "yellow"], false);
+      createRace(14, [0,0,0,0], ["red", "white", "blue", "yellow"], true);
+      createRace(15, [0,0,0,0], ["red", "white", "blue", "yellow"], true);
       createAllRaceTables();
     </script>
   </div>
