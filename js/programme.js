@@ -79,7 +79,7 @@ function createTeamTable(team) {
     input.name = "away";
     if (awayTeamName != null)  input.value = awayTeamName;
   }
-  input.setAttribute("onchange", "setTeamName(this.name, this.value)");
+  input.setAttribute("oninput", "setTeamName(this.name, this.value)");
   tdTeamName.appendChild(textField.appendChild(input));;
 
   // Team result
@@ -114,7 +114,7 @@ function createTeamTable(team) {
     input.id = "rider-name-textfield";
     input.name = i;
     input.value = riders[i].name;
-    input.setAttribute("onchange", "setRider(this.name, this.value); createAllRaceTables()");
+    input.setAttribute("oninput", "setRider(this.name, this.value); createAllRaceTables()");
     tdRiderName.appendChild(textField.appendChild(input));;
     tdRiderName.id = "td-rider-name";
     // Results of rider races
@@ -304,7 +304,7 @@ function createRaceTable(race) {
     input.id = "standard-textfield";
     input.name = [race.raceNumber, i];
     input.value = race.positions[i];
-    input.setAttribute("onchange", "calculateResults(this)");
+    input.setAttribute("oninput", "calculateResults(this)");
     tdRiderPosition.appendChild(textField.appendChild(input));
     tdRiderPosition.className = "td-" + race.helmets[i];
     tdRiderPosition.width = "20px";
