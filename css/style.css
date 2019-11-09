@@ -26,7 +26,6 @@ body {
 
 #away {
   float: right;
-  display: inline-block;
 }
 
 .races-wrapper {
@@ -44,7 +43,6 @@ body {
 
 #races-wrapper-right {
   float: right;
-  display: inline-block;
 }
 
 table {
